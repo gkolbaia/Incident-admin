@@ -21,7 +21,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class IncidentGridComponent implements OnInit {
   filterControl = new FormControl();
   displayedColumns: string[] = ['createDate', 'author', 'status'];
-  incidents: Incident[];
   dataSource: MatTableDataSource<any>;
   constructor(
     private incidentService: IncidentService,
@@ -32,7 +31,6 @@ export class IncidentGridComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   ngOnInit(): void {
-    this.incidents = this.incidentService.getIncidents();
     this.initTable(this.incidents);
     this.filterControl.valueChanges
       .pipe(debounceTime(500))
@@ -66,5 +64,12 @@ export class IncidentGridComponent implements OnInit {
     this.dataSource = new MatTableDataSource(tableSourse);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+  }
+  changeIncidentStatus(incident: Incident): void {
+    this.incidentService.changeIncidentStatus(incident.id);
+    this.initTable(this.incidents);
+  }
+  get incidents(): Incident[] {
+    return this.incidentService.getIncidents();
   }
 }
