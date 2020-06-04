@@ -9,7 +9,7 @@ const users: User[] = [{ email: 'g@gmail.com', password: 'password1' }];
 })
 export class AuthService {
   constructor(private router: Router) {}
-  login(credentials: User) {
+  login(credentials: User): Observable<User> {
     const loggedUser = this.checkUser(credentials);
     if (loggedUser) {
       return of(loggedUser);
@@ -17,7 +17,7 @@ export class AuthService {
       return throwError({status: 400, message: 'bad request'});
     }
   }
-  checkSession() {
+  checkSession(): string | boolean {
     const userEmail = localStorage.getItem('token');
     if (!userEmail){
       return false;
@@ -25,12 +25,12 @@ export class AuthService {
     const loggedUser = users.find(user => user.email === userEmail);
     return loggedUser.email;
   }
-  logout() {
+  logout(): void {
     localStorage.removeItem('token');
     this.router.navigate(['/login']);
 
   }
-  checkUser(credentials: User) {
+  checkUser(credentials: User): User {
     return users.find(
       (user: User) =>
         user.email === credentials.email &&

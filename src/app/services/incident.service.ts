@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 import { Incident } from '../interfaces/Incident.interface';
+import { Router } from '@angular/router';
 const incidentData: Incident[] = [
   {
     id: '1',
@@ -124,22 +125,38 @@ const incidentData: Incident[] = [
   providedIn: 'root',
 })
 export class IncidentService {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
   getIncidents(): Incident[] {
+    if (!this.authService.checkSession()) {
+      this.router.navigate(['/login']);
+      return;
+    }
     return incidentData;
   }
   filterIncidents(value: string): Incident[] {
+    if (!this.authService.checkSession()) {
+      this.router.navigate(['/login']);
+      return;
+    }
     return incidentData.filter(
       (incident) => incident.author.indexOf(value) > -1
     );
   }
   addIncident(incident): void {
+    if (!this.authService.checkSession()) {
+      this.router.navigate(['/login']);
+      return;
+    }
     incident.createDate = new Date();
     incident.author = this.authService.checkSession();
     incident.id = incidentData.length + 2;
     incidentData.unshift(incident);
   }
   changeIncidentStatus(id: string): Incident[] {
+    if (!this.authService.checkSession()) {
+      this.router.navigate(['/login']);
+      return;
+    }
     return incidentData.map((incident: Incident) => {
       if (incident.id === id) {
         incident.status = !incident.status;
