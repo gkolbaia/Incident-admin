@@ -1,0 +1,23 @@
+  <p mat-dialog-title> დეტალური ინფორმაცია </p>
+
+  <div class="incidet-details">
+    <mat-form-field>
+      <input type="text" placeholder="Create Date" aria-label="Create Date" matInput readonly
+         [ngModel]="incident.createDate | date:'yyyy-MM-dd'">
+  </mat-form-field>
+      <mat-form-field>
+          <input type="text" placeholder="Title" aria-label="Title" matInput readonly
+             [(ngModel)]="incident.title">
+      </mat-form-field>
+
+      <mat-form-field>
+          <textarea rows="5" placeholder="Description" aria-label="Description" matInput readonly
+             [(ngModel)]="incident.description"></textarea>
+      </mat-form-field>
+
+      <mat-checkbox [(ngModel)]="incident.status" disabled>Solved</mat-checkbox>
+      <br>
+      <mat-form-field *ngFor="let step of incident.steps let i = index">
+        <input type="text" placeholder="step {{i+1}}" aria-label="step" matInput readonly [(ngModel)]="incident.steps[i]">
+      </mat-form-field>
+  </div>

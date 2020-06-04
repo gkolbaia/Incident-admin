@@ -1,0 +1,35 @@
+  <h1 style="text-align: center;">Add Incident</h1>
+
+  <mat-card>
+    <form [formGroup]="incidentForm">
+      <mat-form-field style="width: 100%;">
+        <mat-label>Title</mat-label>
+        <input formControlName="title" matInput type="text" />
+      </mat-form-field>
+      <mat-form-field style="width: 100%;">
+        <mat-label>Description</mat-label>
+        <textarea  formControlName="description" matInput type="text"></textarea>
+      </mat-form-field>
+        <mat-checkbox formControlName=status>solved</mat-checkbox>
+        <br>
+        <br>
+      <button matTooltipShowDelay="300" matTooltip="Add step" type="button" style="margin-bottom:10px;" mat-mini-fab color="basic" (click)=addStep()>
+        <mat-icon>add</mat-icon>
+      </button>
+      <div cdkDropList (cdkDropListDropped)=dropStep($event) formArrayName="steps" style="display: flex; flex-direction: column;">
+        <mat-form-field cdkDrag *ngFor="let fieldSetIteration of gSteps.controls let i = index" appearance=outline style="width: 100%; padding: 0;">
+          <mat-label>step {{i+1}}</mat-label>
+          <input [formControlName]=i matInput type="text">
+          <mat-icon cdkDragHandle style="cursor: pointer; padding:0 8px 0 0;" (click)=$event.stopPropagation() matPrefix id="add-button">menu</mat-icon>
+        </mat-form-field>
+      </div>
+    </form>
+    <div class="actions">
+      <button [disabled]=!incidentForm.valid mat-raised-button color="primary" (click)="addIncident()">
+        Save
+      </button>
+      <button mat-raised-button color="warn" (click)="closeDialog()">
+        Close
+      </button>
+    </div>
+  </mat-card>

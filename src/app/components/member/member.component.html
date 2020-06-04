@@ -1,0 +1,15 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <span>Incident App</span>
+    <span class="example-spacer"></span>
+    <span>{{user}}</span>
+      <mat-icon (click)=logout()
+      matTooltip="Logout"
+      class="example-icon"
+      aria-hidden="false"
+      aria-label="Example user verified icon"
+      >login</mat-icon
+    >
+  </mat-toolbar-row>
+</mat-toolbar>
+<router-outlet></router-outlet>

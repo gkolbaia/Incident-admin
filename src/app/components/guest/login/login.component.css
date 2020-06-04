@@ -1,0 +1,27 @@
+.login-form {
+    height: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.mat-card {
+  min-width: 600px;
+}
+.mat-card form {
+  display: flex;
+  flex-direction: column;
+  /* padding: 20px 0; */
+}
+mat-card-title{
+  text-align: center;
+}
+.login-form button {
+  width: 15%;
+}
+.messages {
+  padding: 0 0 20px 0;
+}
+.messages span {
+  color: red;
+}
+
